@@ -67,7 +67,7 @@ export default function Dashboard() {
                 className="fas fa-newspaper mb-3"
                 style={{ fontSize: "50px", color: "#28a745" }}
               ></i>
-              <h5 className="card-title">News</h5>
+              <h5 className="card-title">Car</h5>
               <p className="card-text" style={{ fontSize: "20px", fontWeight: "bold" }}>
                 {data.totalNews}
               </p>
@@ -109,13 +109,11 @@ export default function Dashboard() {
                 transition: "transform 0.3s ease-in-out",
               }}
             >
-              <i
-                className="fas fa-comments mb-3"
-                style={{ fontSize: "50px", color: "#dc3545" }}
-              ></i>
-              <h5 className="card-title">Comment</h5>
+             <i className="fas fa-list-alt mb-3" style={{ fontSize: "50px", color: "#dc3545" }}></i>
+
+              <h5 className="card-title">Booking</h5>
               <p className="card-text" style={{ fontSize: "20px", fontWeight: "bold" }}>
-                {data.totalComment}
+                {data.totalBooking}
               </p>
             </div>
           </div>

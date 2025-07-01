@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { useState, useEffect } from "react"
-export default function ManageNews() {
+export default function ManageCar() {
     var [data1, setData] = useState([]);
     var[load,setLoad] = useState(true)
     useEffect(() => {
@@ -99,8 +99,10 @@ export default function ManageNews() {
                             <tr className="ms-3">
                                 <td style={{ border: "2px solid green" }}>Sr no</td>
                                 <td style={{ border: "2px solid green" }}>CategoryName</td>
-                                <td style={{ border: "2px solid green" }}>News title</td>
-                                <td style={{ border: "2px solid green" }}>Description</td>
+                                <td style={{ border: "2px solid green" }}>Title</td>
+                                <td style={{ border: "2px solid green" }}>Model</td>
+                                <td style={{ border: "2px solid green" }}>Seating Capacity</td>
+                                <td style={{ border: "2px solid green" }}>Price Per km</td>
                                 <td style={{ border: "2px solid green" }}>Image Or Video</td>
                                 <td style={{ border: "2px solid green" }}>Action</td>
                                 <td style={{ border: "2px solid green" }}>Status</td>
@@ -112,9 +114,11 @@ export default function ManageNews() {
                                         <td style={{ border: "2px solid green" }}>{index + 1}</td>
                                         <td style={{ border: "2px solid green" }}>{el.categoryId?.name}</td>
                                         <td style={{ border: "2px solid green" }}>{el.title}</td>
-                                        <td style={{ border: "2px solid green" }}>{el.description}</td>
+                                        <td style={{ border: "2px solid green" }}>{el.model}</td>
+                                        <td style={{ border: "2px solid green" }}>{el.seatingCapacity}</td>
+                                         <td style={{ border: "2px solid green" }}>{el.pricePerKm}</td>
                                         <td style={{ border: "2px solid green" }}><img src={"http://localhost:5050/" + el.image} style={{ height: "100px", width: "100px" }} /></td>
-                                        <td style={{ border: "2px solid green" }}><Link to={"/updatenews/"+el._id} className="btn btn-primary">Edit</Link>
+                                        <td style={{ border: "2px solid green" }}><Link to={"/admin/updatenews/"+el._id} className="btn btn-primary">Edit</Link>
                                        
                                         </td>
                                         <td>  {el.status?<Link className="btn btn-danger" style={{backgroundColor:"red"}}  onClick={()=>{changeStatusFalse(el?._id)}}>Inactive</Link>:<Link className="btn btn-success"  style={{backgroundColor:"green"}} onClick={()=>{changeStatusTrue(el?._id)}}>Active</Link>}</td> 

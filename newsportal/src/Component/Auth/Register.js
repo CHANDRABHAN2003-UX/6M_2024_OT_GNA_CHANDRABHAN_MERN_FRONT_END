@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css"; // Import the styles for Toastify
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -20,35 +20,45 @@ export default function Register() {
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const validateForm = () => {
-    if (!name || !email || !contact || !gender || !password) {
-      setError("All fields are required.");
-      return false;
-    }
-    setError("");
-    return true;
-  };
+  if (!name || !email || !contact || !gender || !password) {
+    setError("All fields are required.");
+    toast.error("All fields are required.");
+    return false;
+  }
+
+  const phoneRegex = /^[89]\d{9}$/;
+  if (!phoneRegex.test(contact)) {
+    const errorMessage = "Contact number must be 10 digits and start with 9 or 8.";
+    setError(errorMessage);
+    toast.error(errorMessage);
+    return false;
+  }
+
+  setError("");
+  return true;
+};
+
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-  
+
     if (!validateForm()) {
       return;
     }
-  
+
     let data = new URLSearchParams();
     data.append("name", name);
     data.append("email", email);
     data.append("password", password);
     data.append("contact", contact);
     data.append("gender", gender);
-  
-    // Make sure there's no token sent in the request
+
     axios
       .post("http://localhost:5050/viewer/viewer/add", data)
       .then((res) => {
         if (res.data.success) {
           toast.success(res.data.message);
-          navigate("/login"); // Redirect to login after successful registration
+          navigate("/login");
         } else {
           toast.error(res.data.message);
         }
@@ -58,7 +68,7 @@ export default function Register() {
         toast.error("An error occurred. Please try again.");
       });
   };
-  
+
   return (
     <div style={{ maxWidth: "400px", margin: "50px auto", textAlign: "center" }}>
       <h2>Register</h2>
@@ -85,12 +95,14 @@ export default function Register() {
         </div>
         <div style={{ marginBottom: "15px" }}>
           <input
-            type="text"
+            type="tel"
             placeholder="Contact"
             value={contact}
             onChange={handleContactChange}
             style={{ width: "100%", padding: "10px", borderRadius: "5px" }}
             required
+            pattern="[89][0-9]{9}"
+            maxLength={10}
           />
         </div>
         <div style={{ marginBottom: "15px" }}>
@@ -132,7 +144,10 @@ export default function Register() {
         </button>
       </form>
       <p style={{ marginTop: "15px", fontSize: "14px" }}>
-        Already have an account? <Link to="/login" style={{ color: "#007bff" }}>Login here</Link>.
+        Already have an account?{" "}
+        <Link to="/login" style={{ color: "#007bff" }}>
+          Login here
+        </Link>.
       </p>
       <ToastContainer theme="light" />
     </div>

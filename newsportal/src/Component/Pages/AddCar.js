@@ -2,11 +2,13 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function AddNews() {
+export default function AddCar() {
     const [Title, setTitle] = useState("");
-    const [Description, setDescription] = useState("");
+    const [Model, setModel] = useState("");
+    const [SeatingCapacity, setSeatingCapacity] = useState("");
+    const [PricePerKm, setPricePerKm] = useState("");
     const [Image, setImage] = useState("");
-   const [categoryId,setCategoryId]=useState("")
+   const [CategoryId,setCategoryId]=useState("")
     var [data1, setData] = useState([]);
     const changeImage = (e) => {
         console.log("file change fun call", e);
@@ -47,12 +49,14 @@ export default function AddNews() {
         console.log("form handle fun");
         e.preventDefault();
 
-        console.log("The category Id is ", categoryId)
+        console.log("The category Id is ", CategoryId)
         let data = new FormData()
         data.append("title", Title)
-        data.append("description",Description)
+        data.append("model", Model);
+        data.append("seatingCapacity", SeatingCapacity)
+         data.append("pricePerKm",PricePerKm)
         data.append("image",Image)
-        data.append("categoryId", categoryId)
+        data.append("categoryId", CategoryId)
         axios.post("http://localhost:5050/admin/add/news", data, { headers: { Authorization: sessionStorage.getItem("token") } })
             .then((res) => {
                 console.log(res);
@@ -69,7 +73,7 @@ export default function AddNews() {
             <div className="container d-flex justify-content-center align-items-center vh-100">
                 <div className="card shadow-lg" style={{ width: "400px" }}>
                     <div className="card-header text-center bg-primary text-white">
-                        <h3>Add News</h3>
+                        <h3>Add Vehicle</h3>
                     </div>
 
                     <div className="card-body">
@@ -94,9 +98,18 @@ export default function AddNews() {
                                 <label htmlFor="exampleInputName">Title</label>
                                 <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Title" value={Title} onChange={(e) => { setTitle(e.target.value); }} /><br />
                             </div>
+                
                             <div className="form-group mb-3">
-                                <label htmlFor="exampleInputName">Description</label>
-                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Description" value={Description} onChange={(e) => { setDescription(e.target.value); }} /><br />
+                                <label htmlFor="exampleInputName">Model</label>
+                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Model" value={Model} onChange={(e) => { setModel(e.target.value); }} /><br />
+                            </div>
+                            <div className="form-group mb-3">
+                                <label htmlFor="exampleInputName">Seating Capacity</label>
+                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Seats" value={SeatingCapacity} onChange={(e) => { setSeatingCapacity(e.target.value); }} /><br />
+                            </div>
+                             <div className="form-group mb-3">
+                                <label htmlFor="exampleInputName">Price Per Km</label>
+                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Price" value={PricePerKm} onChange={(e) => { setPricePerKm(e.target.value); }} /><br />
                             </div>
                             <div className="form-group mb-3">
                                 <label htmlFor="exampleInputImage">Image or Video</label>

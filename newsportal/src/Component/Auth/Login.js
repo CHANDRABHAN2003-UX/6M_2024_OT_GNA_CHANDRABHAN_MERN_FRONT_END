@@ -1,14 +1,19 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate,Link } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css"; // Import the styles for Toastify
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get redirect path from query (e.g., /login?redirect=booking)
+  const redirectPath = new URLSearchParams(location.search).get("redirect");
+
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
@@ -24,28 +29,33 @@ export default function Login() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    let data = {
-      email: email,
-      password: password,
-    };
+    if (!validateForm()) return;
 
-    axios.post("http://localhost:5050/admin/login", data)
+    const data = { email, password };
+
+    axios
+      .post("http://localhost:5050/admin/login", data)
       .then((res) => {
         if (res.data.success) {
           toast.success(res.data.message);
+
           sessionStorage.setItem("token", res.data.token);
           sessionStorage.setItem("viewerId", res.data.data.viewerId);
-          sessionStorage.setItem("userType",res.data.data.userType)
-          if (sessionStorage.getItem("userType") == 1) {
+          sessionStorage.setItem("userType", res.data.data.userType);
+
+          const userType = res.data.data.userType;
+
+          if (userType === 1) {
             navigate("/admin");
           } else {
-            navigate("/"); 
+            // Redirect to redirectPath or booking if userType is not admin
+            navigate(`/${redirectPath || "booking"}`);
           }
-          
-
-
         } else {
           toast.error(res.data.message);
+          setTimeout(() => {
+            navigate("/register");
+          }, 1500); // Delay redirect to allow toast to show
         }
       })
       .catch((err) => {
@@ -94,7 +104,10 @@ export default function Login() {
         </button>
       </form>
       <p style={{ marginTop: "15px", fontSize: "14px" }}>
-        Don't have an account? <Link to="/register" style={{ color: "#007bff" }}>Register here</Link>.
+        Don't have an account?{" "}
+        <Link to="/register" style={{ color: "#007bff" }}>
+          Register here
+        </Link>.
       </p>
       <ToastContainer theme="light" />
     </div>

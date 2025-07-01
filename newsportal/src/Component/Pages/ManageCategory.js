@@ -100,7 +100,7 @@ export default function ManageCategory() {
                                         <td style={{ border: "2px solid green" }}>{index + 1}</td>
                                         <td style={{ border: "2px solid green" }}>{el.name}</td>
                                         <td style={{ border: "2px solid green" }}><img src={"http://localhost:5050/"+el.image} style={{ height: "100px", width: "100px" }} /></td>
-                                        <td style={{ border: "2px solid green" }}><Link to={"/updatecategory/"+el._id} className="btn btn-primary">Edit</Link>
+                                        <td style={{ border: "2px solid green" }}><Link to={"/admin/updatecategory/"+el._id} className="btn btn-primary">Edit</Link>
                                         </td>
                                      <td>  {el.status?<Link className="btn btn-danger" style={{backgroundColor:"red"}}  onClick={()=>{changeStatusFalse(el?._id)}}>Inactive</Link>:<Link className="btn btn-success"  style={{backgroundColor:"green"}} onClick={()=>{changeStatusTrue(el?._id)}}>Active</Link>}</td> 
                                     </tr>

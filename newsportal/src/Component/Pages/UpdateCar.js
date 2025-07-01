@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-export default function UpdateNews() {
+export default function UpdateCar() {
     const [Title, setTitle] = useState("");
-    const [Description, setDescription] = useState("");
+   
+    const [Model, setModel] = useState("");
+    const [SeatingCapacity, setSeatingCapacity] = useState("");
+    const [PricePerKm, setPricePerKm] = useState("");
     const [Image, setImage] = useState("");
    const [categoryId,setCategoryId]=useState("")
     var [data1, setData] = useState([]);
@@ -21,7 +24,9 @@ export default function UpdateNews() {
     .then((res)=>{
             console.log(res);
             setTitle(res.data?.data?.title)
-            setDescription(res.data.data.description)
+    setPricePerKm(res.data.data?.pricePerKm)
+            setModel(res.data.data?.model)
+            setSeatingCapacity(res.data.data?.seatingCapacity)
             setImage(res.data.data.image)
             setCategoryId(res.data.data?.categoryId?._id)
             
@@ -55,7 +60,10 @@ const handleForm = (e) => {
     let data = new FormData()
     data.append("_id",id)
     data.append("title",Title)
-    data.append("description",Description)
+    
+    data.append("model", Model);
+    data.append("seatingCapacity", SeatingCapacity)
+    data.append("pricePerKm", PricePerKm)
     data.append("image", Image)
     data.append("categoryId", categoryId)
     axios.post("http://localhost:5050/admin/update/news", data, { headers: { Authorization: sessionStorage.getItem("token") } })
@@ -101,9 +109,18 @@ const handleForm = (e) => {
                                 <label htmlFor="exampleInputName">Title</label>
                                 <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Title" value={Title} onChange={(e) => { setTitle(e.target.value); }} /><br />
                             </div>
+                            
                             <div className="form-group mb-3">
-                                <label htmlFor="exampleInputName">Description</label>
-                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Description" value={Description} onChange={(e) => { setDescription(e.target.value); }} /><br />
+                                <label htmlFor="exampleInputName">Model</label>
+                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Description" value={Model} onChange={(e) => { setModel(e.target.value); }} /><br />
+                            </div>
+                            <div className="form-group mb-3">
+                                <label htmlFor="exampleInputName">Seating Capacity</label>
+                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Description" value={SeatingCapacity} onChange={(e) => { setSeatingCapacity(e.target.value); }} /><br />
+                            </div>
+                              <div className="form-group mb-3">
+                                <label htmlFor="exampleInputName">Price PerKm</label>
+                                <input type="text" className="form-control" id="exampleInputName" placeholder="Enter Price" value={PricePerKm} onChange={(e) => { setPricePerKm(e.target.value); }} /><br />
                             </div>
                             <div className="form-group mb-3">
                                 <label htmlFor="exampleInputImage">Image or Video</label>

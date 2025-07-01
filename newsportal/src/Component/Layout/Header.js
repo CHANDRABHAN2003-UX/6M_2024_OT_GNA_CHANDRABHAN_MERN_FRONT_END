@@ -37,7 +37,9 @@ export default function Header() {
       nav("/login"); // If no token, redirect to login page
     }
   }, [nav]);
-
+  const today = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const formattedDate = today.toLocaleDateString('en-US', options);
   return (
     <header>
       {/* Header Start */}
@@ -53,9 +55,9 @@ export default function Header() {
                       <img src="assets/img/icon/header_icon1.png" alt="" />
                       34ºc, Sunny
                     </li>
-                    <li>
+                    <li className="me-4">
                       <img src="assets/img/icon/header_icon1.png" alt="" />
-                      Tuesday, 18th June, 2019
+                       {formattedDate}
                     </li>
                   </ul>
                 </div>
@@ -106,144 +108,127 @@ export default function Header() {
               <div className="row align-items-center">
                 {/* Logo */}
                 <div className="col-xl-3 col-lg-3 col-md-3 text-center">
-                  <div className="logo">
-                    <Link to="/">
-                      <img
-                        src="/assets/img/hero/newslogo.png"
-                        alt="Satyavani Logo"
-                        className="img-fluid rounded-circle"
-                        style={{
-                          height: "100px",
-                          width: "100px",
-                          objectFit: "cover",
-                          border: "2px solid #ffffff",
-                          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)"
-                        }}
-                      />
-                    </Link>
-                  </div>
+                 
                 </div>
                 {/* Header Banner */}
-                <div className="col-xl-9 col-lg-9 col-md-9 text-end">
-                  <div className="header-banner">
-                    <img
-                      src="assets/img/hero/header_card.jpg"
-                      alt=""
-                      className="img-fluid"
-                    />
-                  </div>
-                </div>
               </div>
             </div>
           </div>
 
           {/* Bottom Header */}
-          <div className="header-bottom header-sticky py-2">
-            <div className="container">
-              <div className="row align-items-center">
-                <div className="col-xl-10 col-lg-10 col-md-12">
-                  {/* Main Menu */}
-                  <nav className="main-menu d-flex justify-content-between">
-                    <ul id="navigation" className="d-flex list-unstyled gap-4 mb-0">
-                      <li>
-                        <Link to="/admin">Home</Link>
-                      </li>
-                      <li className="dropdown">
-                        <Link
-                          to="/admin/category"
-                          className="dropdown-toggle"
-                          data-bs-toggle="dropdown"
-                        >
-                          Category
-                        </Link>
-                        <ul className="dropdown-menu">
-                          <li>
-                            <Link to="/admin/addcategory" className="dropdown-item">
-                              Add Category
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/admin/managecategory" className="dropdown-item">
-                              Manage Category
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="dropdown">
-                        <Link
-                          to="#"
-                          className="dropdown-toggle"
-                          data-bs-toggle="dropdown"
-                        >
-                          News
-                        </Link>
-                        <ul className="dropdown-menu">
-                          <li>
-                            <Link to="/admin/addnews" className="dropdown-item">
-                              Add News
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/admin/managenews" className="dropdown-item">
-                              Manage News
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
-                      <li className="dropdown">
-                        <Link
-                          to="#"
-                          className="dropdown-toggle"
-                          data-bs-toggle="dropdown"
-                        >
-                          Poll
-                        </Link>
-                        <ul className="dropdown-menu">
-                          <li>
-                            <Link to="/admin/addpoll" className="dropdown-item">
-                              Add Poll
-                            </Link>
-                          </li>
-                          <li>
-                            <Link to="/admin/managepoll" className="dropdown-item">
-                              Manage poll
-                            </Link>
-                          </li>
-                        </ul>
-                      </li>
+         {/* Bottom Header */}
+<div className="header-bottom header-sticky py-2 bg-white shadow-sm">
+  <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-light">
+      {/* Logo */}
+      <Link to="/admin" className="navbar-brand d-flex align-items-center">
+        <img
+          src="/assets/img/logocar.jpg"
+          alt="car Logo"
+          className="img-fluid rounded-circle"
+          style={{
+            height: "60px",
+            width: "60px",
+            objectFit: "cover",
+            border: "2px solid #ffffff",
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.2)"
+          }}
+        />
+      </Link>
 
-                      {isLoggedIn && (
-                        <a onClick={logout} className="btn btn-primary  px-3 d-none d-sm-block mx-auto mt-3 ">
-                          Logout <i className="fa fa-arrow-right ms-3" />
-                        </a>
-                      )}
-                    </ul>
-                  </nav>
-                </div>
+      {/* Toggle button for mobile */}
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
 
-                {/* Search Box */}
-                <div className="col-xl-2 col-lg-2 col-md-12 text-end">
-                  <div className="header-right-btn d-inline-block">
-                    <i className="fas fa-search special-tag me-2" />
-                    <div className="search-box d-inline-block">
-                      <form action="#">
-                        <input
-                          type="text"
-                          placeholder="Search"
-                          className="form-control"
-                        />
-                      </form>
-                    </div>
-                  </div>
-                </div>
+      {/* Navbar Links */}
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-lg-center gap-lg-4">
+          <li className="nav-item">
+            <Link to="/admin" className="nav-link">
+              Home
+            </Link>
+          </li>
 
-                {/* Mobile Menu */}
-                <div className="col-12 d-block d-md-none mt-3">
-                  <div className="mobile_menu" />
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Car Category Dropdown */}
+          <li className="nav-item dropdown">
+            <Link
+              to="#"
+              className="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+            >
+              Car Category
+            </Link>
+            <ul className="dropdown-menu">
+              <li>
+                <Link to="/admin/addcategory" className="dropdown-item">
+                  Add Category
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/managecategory" className="dropdown-item">
+                  Manage Category
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          {/* Car Dropdown */}
+          <li className="nav-item dropdown">
+            <Link
+              to="#"
+              className="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+            >
+              Car
+            </Link>
+            <ul className="dropdown-menu">
+              <li>
+                <Link to="/admin/addnews" className="dropdown-item">
+                  Add Car
+                </Link>
+              </li>
+              <li>
+                <Link to="/admin/managenews" className="dropdown-item">
+                  Manage Car
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li className="nav-item">
+            <Link to="/admin/bookingList" className="nav-link">
+              Bookings
+            </Link>
+          </li>
+
+          {/* Logout Button */}
+          {isLoggedIn && (
+            <li className="nav-item">
+              <button
+                onClick={logout}
+                className="btn btn-outline-danger ms-lg-3 mt-2 mt-lg-0"
+              >
+                Logout <i className="fa fa-arrow-right ms-2" />
+              </button>
+            </li>
+          )}
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
+
         </div>
       </div>
       {/* Header End */}
